@@ -1,4 +1,5 @@
 import Portal from 'Portal.js'
+import Room from 'Room.js'
 
 
 export default class SceneData {
@@ -21,17 +22,6 @@ export default class SceneData {
 
     }
 
-    GetPropertyByName(propertyName, baseObj){
-        for (var i = 0; i < baseObj.propreties; i ++){
-            if(baseObj.propreties.name == propertyName)
-                return baseObj.propreties[i];
-        }
-
-        console.log("Property [" + propertyName +"] not found.");
-        return null;
-
-
-    }
 
     GetPortalByID(id){
         array.forEach(e => {
@@ -60,7 +50,8 @@ export default class SceneData {
     ParseRoomData = () => {
         this.map.findObject('Rooms', function(object) {
 
-            this.scene.rooms.push(object);
+            var newRoom = new Room(object);
+            this.scene.rooms.push(newRoom);
 
         }, this);
 
@@ -70,27 +61,3 @@ export default class SceneData {
 
 }
 
-/*
-
-export default class Room {
-
-    constructor(name) {
-        this.name = name;
-        this.portals = [];
-
-    }
-
-    ParsePortalData(portal){
-
-    }
-
-}
-
-
-
-export default class MapData {
-
-
-
-}
-*/

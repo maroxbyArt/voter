@@ -13,6 +13,7 @@ export default class Portal extends Phaser.GameObjects.Sprite {
         this.scene = scene;
 
         this.tileObj = tileObj;
+        this.id = tileObj.id;
 
         console.log("CREATE PORTAL");
     }
