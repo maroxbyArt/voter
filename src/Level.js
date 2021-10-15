@@ -98,7 +98,7 @@ import Rooms from 'Rooms.js'
             this.cameras.main.fadeOut(500, 0, 0, 0, function(camera, progress){                
                 if(progress == 1){
 
-                    var targetRoom = Rooms.GetRoomByID(this.rooms, this.player.currentRoom);
+                    var targetRoom = Rooms.GetRoomByID(this.player.currentRoom, this.rooms);
                     console.log("Target Room: " + targetRoom);
 
                     // Change camera boundaries when fade out complete.
@@ -114,9 +114,13 @@ import Rooms from 'Rooms.js'
                         
                         if (progress === 1) {
                             this.player.roomChange = false;
+                            this.player.canMove = true;
+                            this.isFading = false;
 
-                            //this.player.canMove = true;
-                            //this.roomStart(this.player.currentRoom);
+
+                            this.OnLoadRoom(Portals.GetPortalByID(this.player.currentRoom, this.portals.getChildren()));
+
+                            this.roomStart(this.player.currentRoom);
                         }
                         
                     }, this);
@@ -160,7 +164,10 @@ import Rooms from 'Rooms.js'
 
             function(player, portal) {
 
-                if(this.player.roomChange == true)
+                if(
+                    player.roomChange == true ||
+                    portal.suspend == true
+                )
                     return;
 
                 console.log("ON STAIRS");
@@ -168,32 +175,11 @@ import Rooms from 'Rooms.js'
                 console.log(player);
                 console.log(portal);
 
+                
                 this.ChangeMap(player, portal);
 
-                /*
-                var roomLabel = "";
-                var targetRoomObj = portal.tileObj;
-                var targetRoomProps = targetRoomObj.properties;
-                var targetRoom = Utils.GetPropertyByName("room", targetRoomProps)
-                console.log("TARGET ROOM: " + targetRoom);
-                
-                var targetRoomSuffix = Utils.GetPropertyByName("to_suffix", targetRoomProps)
-                console.log("TARGET ROOM SUFFIX: " + targetRoomSuffix);
-
-                if(targetRoom != 'exit'){
-                    roomLabel = targetRoom + targetRoomSuffix;
-                    console.log("ROOM CHANGE: " + roomLabel);
-                    console.log("ROOM SUFFIX: " + targetRoomSuffix);
-                    console.log("ROOM PROPS: " + JSON.stringify(targetRoomProps));
-                    
-                }
-            
-                var roomIndex = Rooms.GetRoomByName(roomLabel, this.rooms);
-
-                this.player.currentRoom = roomIndex;
-                this.player.roomChange = true;
                 this.player.onStairs = true;
-                */
+
 
             }, 
             null, 
@@ -204,36 +190,38 @@ import Rooms from 'Rooms.js'
 
     ChangeMap = (player, portal) => {
 
+        this.player.roomChange = true;
+
         var targetPortalID = portal.portalLink;
         var targetPortal = Portals.GetPortalByID(targetPortalID, this.portals.getChildren());
-
         var targetRoom = Rooms.GetRoomByID(targetPortal.room, this.rooms);
-        console.log("=======================================");
 
+        this.LoadRoom(targetRoom, targetPortal);
 
+        this.data.prevPortal = this.data.currPortal;
+        this.data.currPortal = targetPortal;
 
-        /*
-        var roomLabel = "";
-        var targetRoomObj = portal.tileObj;
-        var targetRoomProps = targetRoomObj.properties;
-        var targetRoom = Utils.GetPropertyByName("room", targetRoomProps)
-        */
 
     }
 
-    LoadRoom = (name) => {
-        for(var i = 0; i < this.rooms.length; i++){
+    LoadRoom = (roomObj, portalObj = null) => {
+        console.log("LOAD ROOM");
+        this.player.currentRoom = roomObj.id;
 
-            console.log("ROOMs");
-            console.log(this.rooms[i].name);
+        if(portalObj != null){
+            this.player.x = portalObj.x;
+            this.player.y = portalObj.y;
+        }
 
-            if(this.rooms[i].name === name){
-                console.log("FOUND ROOM");
-                this.player.currentRoom = i;
+    }
 
-            }
+    OnLoadRoom = (targetPortal) => {
 
-        };
+        console.log("target portal: " + JSON.stringify(this.data.currPortal));
+
+        this.player.onStairs = false;
+        this.data.currPortal.suspend = true;
+
 
     }
 

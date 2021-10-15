@@ -17,7 +17,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         console.log("CREATE PLAYER");
 
         this.scene = scene;
-        this.currentRoom = 1;       // Set start room so room change flag doens't fire.
+        this.currentRoom = 1;   
         this.previousRoom = null;
         this.roomChange = false;
         this.canMove = true;

@@ -5,6 +5,7 @@ export default class Rooms {
 
         for(var i = 0; i < rooms.length; i++){
             let currRoom = rooms[i];
+            
             if(id == currRoom.id)
                 return currRoom;
 

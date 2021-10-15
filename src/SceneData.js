@@ -11,6 +11,8 @@ export default class SceneData {
 
         //this.rooms = [];
         //this.portals = scene.physics.add.group();
+        this.currPortal;
+        this.prevPortal;
 
         this.Initialize();
 

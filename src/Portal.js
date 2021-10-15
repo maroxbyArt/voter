@@ -20,9 +20,18 @@ export default class Portal extends Phaser.GameObjects.Sprite {
         this.name = tileObj.name;
         //this.name = tileObj.name;
 
+        console.log("PORAL INIT: " + JSON.stringify(tileObj));
+
         this.room = Utils.GetPropertyByName("room", tileObj.properties);
         this.suffix = Utils.GetPropertyByName("suffix", tileObj.properties);
         this.portalLink = Utils.GetPropertyByName("portal_link", tileObj.properties);
+        this.suspend = Utils.GetPropertyByName("suspend", tileObj.properties);
+
+        this.on("overlapend", function() {
+            console.log("OVERLAP END");
+            if(this.suspend == true)
+                this.suspend = false;
+          });
 
     }
 }

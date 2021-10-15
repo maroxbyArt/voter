@@ -6824,12 +6824,14 @@
     <property name="portal_link" type="object" value="19"/>
     <property name="room" type="object" value="10"/>
     <property name="suffix" value="_main"/>
+    <property name="suspend" type="bool" value="false"/>
    </properties>
   </object>
   <object id="19" name="main" type="portal" x="386" y="670.667" width="28" height="32">
    <properties>
     <property name="portal_link" type="object" value="18"/>
     <property name="room" type="object" value="14"/>
+    <property name="suspend" type="bool" value="false"/>
    </properties>
   </object>
   <object id="22" name="home_up" type="portal" x="287.5" y="1310" width="32" height="34.5">
@@ -6837,6 +6839,7 @@
     <property name="portal_link" type="object" value="23"/>
     <property name="room" type="object" value="9"/>
     <property name="suffix" value="_up"/>
+    <property name="suspend" type="bool" value="false"/>
    </properties>
   </object>
   <object id="23" name="home_down" type="portal" x="287" y="1661" width="33" height="34.5">
@@ -6844,6 +6847,7 @@
     <property name="portal_link" type="object" value="22"/>
     <property name="room" type="object" value="18"/>
     <property name="suffix" value="_down"/>
+    <property name="suspend" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
