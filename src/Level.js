@@ -5,6 +5,7 @@ import Player from 'Player.js'
 import SceneData from 'SceneData.js'
 
 import Utils from 'Utils.js'
+import Portals from 'Portals.js'
 import Rooms from 'Rooms.js'
 
 
@@ -167,6 +168,9 @@ import Rooms from 'Rooms.js'
                 console.log(player);
                 console.log(portal);
 
+                this.ChangeMap(player, portal);
+
+                /*
                 var roomLabel = "";
                 var targetRoomObj = portal.tileObj;
                 var targetRoomProps = targetRoomObj.properties;
@@ -184,16 +188,36 @@ import Rooms from 'Rooms.js'
                     
                 }
             
-                var roomIndex = this.getRoomIndex(roomLabel, this.rooms);
+                var roomIndex = Rooms.GetRoomByName(roomLabel, this.rooms);
+
                 this.player.currentRoom = roomIndex;
                 this.player.roomChange = true;
                 this.player.onStairs = true;
-
+                */
 
             }, 
             null, 
             this
         );
+
+    }
+
+    ChangeMap = (player, portal) => {
+
+        var targetPortalID = portal.portalLink;
+        var targetPortal = Portals.GetPortalByID(targetPortalID, this.portals.getChildren());
+
+        var targetRoom = Rooms.GetRoomByID(targetPortal.room, this.rooms);
+        console.log("=======================================");
+
+
+
+        /*
+        var roomLabel = "";
+        var targetRoomObj = portal.tileObj;
+        var targetRoomProps = targetRoomObj.properties;
+        var targetRoom = Utils.GetPropertyByName("room", targetRoomProps)
+        */
 
     }
 

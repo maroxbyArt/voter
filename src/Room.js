@@ -14,7 +14,6 @@ export default class Room {
 
         this.properties = roomObj.properties;
 
-        console.log("NEW ROOM OBJ: " + JSON.stringify(roomObj));
 
         this.Initialize();
 

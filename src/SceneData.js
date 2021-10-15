@@ -35,10 +35,6 @@ export default class SceneData {
     ParsePortalData = () => {
 
         this.map.findObject('Portal', function(object) {
-
-            console.log("Portal")
-            console.log(object)
-
             this.scene.portals.add(
                 new Portal(this.scene, object.x, object.y, object)
             );

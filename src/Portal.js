@@ -1,3 +1,6 @@
+import Utils from 'Utils.js'
+
+
 export default class Portal extends Phaser.GameObjects.Sprite {
 
     
@@ -13,8 +16,13 @@ export default class Portal extends Phaser.GameObjects.Sprite {
         this.scene = scene;
 
         this.tileObj = tileObj;
-        this.id = tileObj.id;
+        this.id =  tileObj.id;
+        this.name = tileObj.name;
+        //this.name = tileObj.name;
 
-        console.log("CREATE PORTAL");
+        this.room = Utils.GetPropertyByName("room", tileObj.properties);
+        this.suffix = Utils.GetPropertyByName("suffix", tileObj.properties);
+        this.portalLink = Utils.GetPropertyByName("portal_link", tileObj.properties);
+
     }
 }

@@ -75,96 +75,28 @@
          "name":"Portal",
          "objects":[
                 {
-                 "height":0,
-                 "id":4,
-                 "name":"Home",
-                 "point":true,
-                 "rotation":0,
-                 "type":"Portal",
-                 "visible":true,
-                 "width":0,
-                 "x":655.67,
-                 "y":542.33
-                }, 
-                {
-                 "height":0,
-                 "id":5,
-                 "name":"home_up_portal",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"room",
-                         "type":"string",
-                         "value":"home"
-                        }, 
-                        {
-                         "name":"room_link",
-                         "type":"object",
-                         "value":6
-                        }, 
-                        {
-                         "name":"to_suffix",
-                         "type":"string",
-                         "value":"_main"
-                        }],
-                 "rotation":0,
-                 "type":"portal",
-                 "visible":true,
-                 "width":0,
-                 "x":304,
-                 "y":1326
-                }, 
-                {
-                 "height":0,
-                 "id":6,
-                 "name":"home_main_portal",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"room",
-                         "type":"string",
-                         "value":"home"
-                        }, 
-                        {
-                         "name":"room_link",
-                         "type":"object",
-                         "value":5
-                        }, 
-                        {
-                         "name":"to_suffix",
-                         "type":"string",
-                         "value":"_up"
-                        }],
-                 "rotation":0,
-                 "type":"portal",
-                 "visible":true,
-                 "width":0,
-                 "x":304,
-                 "y":1679
-                }, 
-                {
                  "height":30,
                  "id":18,
-                 "name":"home_main_spawn",
+                 "name":"home_main",
                  "properties":[
                         {
-                         "name":"room",
-                         "type":"string",
-                         "value":"home"
-                        }, 
-                        {
-                         "name":"room_link",
+                         "name":"portal_link",
                          "type":"object",
                          "value":19
                         }, 
                         {
-                         "name":"to_suffix",
+                         "name":"room",
+                         "type":"object",
+                         "value":10
+                        }, 
+                        {
+                         "name":"suffix",
                          "type":"string",
                          "value":"_main"
                         }],
                  "rotation":0,
                  "type":"portal",
-                 "visible":false,
+                 "visible":true,
                  "width":64,
                  "x":160,
                  "y":1920.33333333333
@@ -172,22 +104,17 @@
                 {
                  "height":32,
                  "id":19,
-                 "name":"main_portal",
+                 "name":"main",
                  "properties":[
                         {
-                         "name":"room",
-                         "type":"string",
-                         "value":"main"
-                        }, 
-                        {
-                         "name":"room_link",
+                         "name":"portal_link",
                          "type":"object",
                          "value":18
                         }, 
                         {
-                         "name":"to_suffix",
-                         "type":"string",
-                         "value":"_main"
+                         "name":"room",
+                         "type":"object",
+                         "value":14
                         }],
                  "rotation":0,
                  "type":"portal",
@@ -195,6 +122,60 @@
                  "width":28,
                  "x":386,
                  "y":670.666666666667
+                }, 
+                {
+                 "height":34.5,
+                 "id":22,
+                 "name":"home_up",
+                 "properties":[
+                        {
+                         "name":"portal_link",
+                         "type":"object",
+                         "value":23
+                        }, 
+                        {
+                         "name":"room",
+                         "type":"object",
+                         "value":9
+                        }, 
+                        {
+                         "name":"suffix",
+                         "type":"string",
+                         "value":"_up"
+                        }],
+                 "rotation":0,
+                 "type":"portal",
+                 "visible":true,
+                 "width":32,
+                 "x":287.5,
+                 "y":1310
+                }, 
+                {
+                 "height":34.5,
+                 "id":23,
+                 "name":"home_down",
+                 "properties":[
+                        {
+                         "name":"portal_link",
+                         "type":"object",
+                         "value":22
+                        }, 
+                        {
+                         "name":"room",
+                         "type":"object",
+                         "value":18
+                        }, 
+                        {
+                         "name":"suffix",
+                         "type":"string",
+                         "value":"_down"
+                        }],
+                 "rotation":0,
+                 "type":"portal",
+                 "visible":true,
+                 "width":33,
+                 "x":287,
+                 "y":1661
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -286,7 +267,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":22,
+ "nextobjectid":25,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.0",

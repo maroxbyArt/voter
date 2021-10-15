@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="34" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="22">
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="34" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="25">
  <editorsettings>
   <export target="home.json" format="json"/>
  </editorsettings>
@@ -6819,37 +6819,31 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="Portal">
-  <object id="4" name="Home" type="Portal" x="655.67" y="542.33">
-   <point/>
-  </object>
-  <object id="5" name="home_up_portal" type="portal" x="304" y="1326">
+  <object id="18" name="home_main" type="portal" x="160" y="1920.33" width="64" height="30">
    <properties>
-    <property name="room" value="home"/>
-    <property name="room_link" type="object" value="6"/>
-    <property name="to_suffix" value="_main"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="6" name="home_main_portal" type="portal" x="304" y="1679">
-   <properties>
-    <property name="room" value="home"/>
-    <property name="room_link" type="object" value="5"/>
-    <property name="to_suffix" value="_up"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="18" name="home_main_spawn" type="portal" x="160" y="1920.33" width="64" height="30" visible="0">
-   <properties>
-    <property name="room" value="home"/>
-    <property name="room_link" type="object" value="19"/>
-    <property name="to_suffix" value="_main"/>
+    <property name="portal_link" type="object" value="19"/>
+    <property name="room" type="object" value="10"/>
+    <property name="suffix" value="_main"/>
    </properties>
   </object>
-  <object id="19" name="main_portal" type="portal" x="386" y="670.667" width="28" height="32">
+  <object id="19" name="main" type="portal" x="386" y="670.667" width="28" height="32">
    <properties>
-    <property name="room" value="main"/>
-    <property name="room_link" type="object" value="18"/>
-    <property name="to_suffix" value="_main"/>
+    <property name="portal_link" type="object" value="18"/>
+    <property name="room" type="object" value="14"/>
+   </properties>
+  </object>
+  <object id="22" name="home_up" type="portal" x="287.5" y="1310" width="32" height="34.5">
+   <properties>
+    <property name="portal_link" type="object" value="23"/>
+    <property name="room" type="object" value="9"/>
+    <property name="suffix" value="_up"/>
+   </properties>
+  </object>
+  <object id="23" name="home_down" type="portal" x="287" y="1661" width="33" height="34.5">
+   <properties>
+    <property name="portal_link" type="object" value="22"/>
+    <property name="room" type="object" value="18"/>
+    <property name="suffix" value="_down"/>
    </properties>
   </object>
  </objectgroup>
