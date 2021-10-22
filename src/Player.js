@@ -21,6 +21,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.previousRoom = null;
         this.roomChange = false;
         this.canMove = true;
+        this.name = "player";
         this.depth = 20;
 
         scene.physics.world.enable(this);
@@ -102,6 +103,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocity(0);
         let animationName = null;
 
+        
         // standing
         let currentDirection = this.direction;
         if (this.direction === 'left') { currentDirection = 'right'; } //account for flipped sprite
@@ -136,13 +138,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 this.body.setVelocityY(this.vel);
                 animationName = 'walk-down';
             }
-
-            /*
-            if(this.lastAnim !== animationName) {
-                this.lastAnim = animationName;
-                this.anims.play(animationName, true);
-            }
-            */
            
         }
 
@@ -160,49 +155,40 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.velocity.normalize().scale(this.vel);
 
         // Check for room change.
-        this.getRoom();
+        //this.getRoom();
+        
     }
 
-    /** Returns player's current and previous room, flags rooms player has entered. */
-    getRoom() {
 
-        // place holder for current room.
-        let roomNumber;
+    update ()
+    {
 
-        // loop through rooms in this level.
-        for (let room in this.scene.rooms) {
-            let roomLeft   = this.scene.rooms[room].x;
-            let roomRight  = this.scene.rooms[room].x + this.scene.rooms[room].width;
-            let roomTop    = this.scene.rooms[room].y;
-            let roomBottom = this.scene.rooms[room].y + this.scene.rooms[room].height;
+        console.log("PLAYER UPDATE");
+        this.setVelocity(0);
 
-            // Player is within the boundaries of this room.
-            /*
-            if (this.x > roomLeft && this.x < roomRight &&
-                this.y > roomTop  && this.y < roomBottom) {
-
-                roomNumber = room;
-
-                // Set this room as visited by player.
-                let targetRoom = this.scene.rooms[room];
-                let visited = targetRoom.properties.find(function(property) {
-                    return property.name === 'visited';
-                } );
-
-                visited.value = true
-            }
-            */
+        if (cursors.left.isDown)
+        {
+            this.setVelocityX(-200);
+        }
+        else if (cursors.right.isDown)
+        {
+            this.setVelocityX(200);
         }
 
-        // Update player room variables.
-        /*
-        if (roomNumber != this.currentRoom) {
-            this.previousRoom = this.currentRoom;
-            this.currentRoom = roomNumber;
-            this.roomChange = true;
-        } else {
-            this.roomChange = false;
+        if (cursors.up.isDown)
+        {
+            this.setVelocityY(-200);
         }
-        */
+        else if (cursors.down.isDown)
+        {
+            this.setVelocityY(200);
+        }
     }
+
+    Port = () => {
+
+    }
+    
+
+
 }

@@ -14,6 +14,9 @@ export default class SceneData {
         this.currPortal;
         this.prevPortal;
 
+        this.currRoom;
+        this.prevRoom;
+
         this.Initialize();
 
     }
@@ -21,6 +24,7 @@ export default class SceneData {
     Initialize = () => {
         this.ParsePortalData();
         this.ParseRoomData();
+
 
     }
 
@@ -37,11 +41,26 @@ export default class SceneData {
     ParsePortalData = () => {
 
         this.map.findObject('Portal', function(object) {
+            console.log("BASE PORTAL OBJ: " + JSON.stringify(object))
+            var newPortal = new Portal(this.scene, object.x, object.y, object);
+
             this.scene.portals.add(
-                new Portal(this.scene, object.x, object.y, object)
+                newPortal
             );
 
+            //newPortal.data = Object.create();
+            newPortal.setData("properties", object.properties);
+            newPortal.setData("properties", object.properties);
+
+            //newPortal.data.object["properties"] = object.properties;
+            //newPortal.data["properties"] = object.properties;
+            console.log("BASE PORTAL OBJ [newPortal]: " + JSON.stringify(newPortal.getData("properties")));
+
+
         }, this);
+
+        //this.scene.portals.refresh();
+
 
     }
 

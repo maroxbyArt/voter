@@ -8,6 +8,55 @@ import Utils from 'Utils.js'
 import Portals from 'Portals.js'
 import Rooms from 'Rooms.js'
 
+var cursors;
+
+var OnPlayerOverlapProcess = function (player, portal, data) {
+
+                
+    console.log("!!!OnPlayerOverlapProcess [this]: " +  JSON.stringify(this));
+    console.log("!!!OnPlayerOverlapProcess [this.player]: " +  JSON.stringify(this.player));
+    console.log("!!!OnPlayerOverlapProcess [portal]: " +  JSON.stringify(portal));
+    console.log("!!!OnPlayerOverlapProcess [data]: " +  JSON.stringify(data));
+
+    if(
+        //player.roomChange == true ||
+        portal.suspend == true
+    ){
+        return;
+
+    } else {
+        console.log("!!!OnPlayerOverlapProcess!!!");
+        //return true;
+    }
+
+    //console.log("player: " + JSON.stringify(player));
+    //console.log("portal: " + JSON.stringify(portal));
+
+    //return true;
+    
+}
+
+var OnPlayerOverlap = function (player, portal, data) {
+
+    console.log("!!!OnPlayerOverlap [player]: " +  JSON.stringify(player));
+    console.log("!!!OnPlayerOverlap [portal]: " +  JSON.stringify(portal));
+    console.log("!!!OnPlayerOverlap [data]: " +  JSON.stringify(data));
+
+
+    if(
+        this.player.roomChange == false 
+    ){
+        var activePortal = Portals.GetPortalByName(portal.name);
+        console.log("!!!OnPlayerOverlap [activePortal]: " + activePortal);
+
+        this.ChangeMap(this.player, activePortal);
+        this.player.onStairs = true;
+
+    }
+    
+
+
+}
 
 /**
  * Class representing a level (https://photonstorm.github.io/phaser3-docs/Phaser.Scene.html)
@@ -44,6 +93,7 @@ import Rooms from 'Rooms.js'
 
     /** Setup level. */
     create() {
+
         // Make map of level 1.
         this.map = this.make.tilemap({key: "level-1"});
 
@@ -57,6 +107,8 @@ import Rooms from 'Rooms.js'
         this.hSLayer = this.map.createStaticLayer("Hotspots", tileset, 0, 0);
         
         this.player = new Player(this.scene.scene, 400, 300, 'trainer');
+        //this.player = this.physics.add.image(400, 300, 'trainer');
+        cursors = this.input.keyboard.createCursorKeys();
 
         // Set physics boundaries from map width and height.
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
@@ -68,6 +120,7 @@ import Rooms from 'Rooms.js'
         // Setup things in this level.
         this.rooms = [];
         this.portals = this.physics.add.group();﻿
+        //this.portals = this.physics.add.staticGroup();
 
 
         this.data = new SceneData(this);
@@ -85,8 +138,11 @@ import Rooms from 'Rooms.js'
     /** Update called every tick. */
     update(time, delta) {
 
-        this.cameras.main._ch = this.map.heightInPixels;
-        this.cameras.main._cw = this.map.widthInPixels;
+
+
+
+        //this.cameras.main._ch = this.map.heightInPixels;
+        //this.cameras.main._cw = this.map.widthInPixels;
 
         
         // On player room change, stop player movement, fade camerea, and set boundaries.
@@ -99,28 +155,30 @@ import Rooms from 'Rooms.js'
                 if(progress == 1){
 
                     var targetRoom = Rooms.GetRoomByID(this.player.currentRoom, this.rooms);
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     console.log("Target Room: " + targetRoom);
+                    console.log("Target Room[x]: " + targetRoom.x);
+                    console.log("Target Room[y]: " + targetRoom.y);
+                    console.log("Target Room[width]: " + targetRoom.width);
+                    console.log("Target Room[height]: " + targetRoom.height);
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 
                     // Change camera boundaries when fade out complete.
-                    this.cameras.main.setBounds(
-                        targetRoom.x,
-                        targetRoom.y,
-                        targetRoom.width,
-                        targetRoom.height,
-                        true
-                    );
+                    this.OnLoadRoom(Portals.GetPortalByID(this.player.currentRoom, this.portals.getChildren()));
+
 
                     this.cameras.main.fadeIn(500, 0, 0, 0, function(camera, progress) {
                         
                         if (progress === 1) {
+
+
+
                             this.player.roomChange = false;
                             this.player.canMove = true;
                             this.isFading = false;
 
 
-                            this.OnLoadRoom(Portals.GetPortalByID(this.player.currentRoom, this.portals.getChildren()));
-
-                            this.roomStart(this.player.currentRoom);
                         }
                         
                     }, this);
@@ -156,37 +214,53 @@ import Rooms from 'Rooms.js'
     InitColliders = () => {
 
         // Add collisions.
-        this.physics.add.collider(this.player, this.worldLayer);
+        //this.physics.add.collider(this.player, this.worldLayer);
 
         this.physics.add.overlap(
             this.player,  
             this.portals,    
-
-            function(player, portal) {
-
-                if(
-                    player.roomChange == true ||
-                    portal.suspend == true
-                )
-                    return;
-
-                console.log("ON STAIRS");
-
-                console.log(player);
-                console.log(portal);
+            (player, portal) => {
 
                 
-                this.ChangeMap(player, portal);
-
-                this.player.onStairs = true;
-
-
-            }, 
-            null, 
-            this
+                //console.log("!!!OnPlayerOverlapProcess [this]: " +  JSON.stringify(this));
+                console.log("!!!OnPlayerOverlapProcess [this.player]: " +  JSON.stringify(this.player));
+                console.log("!!!OnPlayerOverlapProcess [portal]: " +  JSON.stringify(portal));
+            
+                if(
+                    //player.roomChange == true ||
+                    portal.suspend == true
+                ){
+                    return;
+            
+                } else {
+                    console.log("!!!OnPlayerOverlapProcess!!!");
+                    //return true;
+                }
+            }
+            //OnPlayerOverlapProcess,
+            //this
         );
 
+
+        console.log("INIT COLLIDERS");
+        var portalsArray = this.portals.getChildren();
+
+        console.log("PORTALS count: " + portalsArray.length);
+
+        
+        for(var i = 0; i < portalsArray.length; i++){
+            var currChild = portalsArray[i];
+            console.log("CURR CHILD: " + JSON.stringify(currChild));
+
+            //currChild.InitializeCollider();
+
+
+        }
+        
+
+
     }
+
 
     ChangeMap = (player, portal) => {
 
@@ -201,6 +275,9 @@ import Rooms from 'Rooms.js'
         this.data.prevPortal = this.data.currPortal;
         this.data.currPortal = targetPortal;
 
+        this.data.prevRoom = this.data.currRoom;
+        this.data.currRoom = targetRoom;
+
 
     }
 
@@ -211,6 +288,8 @@ import Rooms from 'Rooms.js'
         if(portalObj != null){
             this.player.x = portalObj.x;
             this.player.y = portalObj.y;
+
+            //OnLoadRoom(portalObj);
         }
 
     }
@@ -219,16 +298,28 @@ import Rooms from 'Rooms.js'
 
         console.log("target portal: " + JSON.stringify(this.data.currPortal));
 
+        this.cameras.main.setBounds(
+            this.data.currRoom.x,
+            this.data.currRoom.y,
+            this.data.currRoom.width,
+            this.data.currRoom.height,
+            true
+        );
+        
+        
+        /*
+        this.cameras.main.setViewport(
+            targetRoom.x,
+            targetRoom.y,
+            500,
+            500
+        );
+        */
+
         this.player.onStairs = false;
         this.data.currPortal.suspend = true;
 
 
-    }
-
-    roomStart(roomNumber) {
-        if (roomNumber == 4) {
-            this.cameras.main.shake(2500, 0.001, true);
-        }
     }
 
 

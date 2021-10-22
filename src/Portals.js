@@ -22,6 +22,27 @@ export default class Portals {
 
     }
 
+    static GetPortalByName = (name, portals) => {
+
+        console.log("Portals [count]: " + portals.length);
+        console.log("TARGET Name: " + name);
+
+        for(var i = 0; i < portals.length; i++){
+            let currPortal = portals[i];
+            console.log("CURR PORTAL SEARCH: " + JSON.stringify(currPortal));
+            console.log("CURR PORTAL SEARCH [name]: " + JSON.stringify(currPortal.name));
+
+            if(name == currPortal.name)
+                return currPortal;
+
+        }
+
+        console.log("Portal [" + name +"] not found.");
+        return null;
+
+
+    }
+
 
 
 }

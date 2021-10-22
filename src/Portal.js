@@ -1,7 +1,7 @@
 import Utils from 'Utils.js'
 
 
-export default class Portal extends Phaser.GameObjects.Sprite {
+export default class Portal extends Phaser.Physics.Arcade.Sprite {
 
     
     /**
@@ -13,25 +13,47 @@ export default class Portal extends Phaser.GameObjects.Sprite {
      */
     constructor(scene, x, y, tileObj) {
         super(scene, x, y);
-        this.scene = scene;
+
+        scene.events.on('update', this.update)
+        //console.log(this.scene.game);
+        scene.add.existing(this);
+
+        //this.scene = scene;
 
         this.tileObj = tileObj;
         this.id =  tileObj.id;
         this.name = tileObj.name;
         //this.name = tileObj.name;
 
-        console.log("PORAL INIT: " + JSON.stringify(tileObj));
 
         this.room = Utils.GetPropertyByName("room", tileObj.properties);
         this.suffix = Utils.GetPropertyByName("suffix", tileObj.properties);
         this.portalLink = Utils.GetPropertyByName("portal_link", tileObj.properties);
+        
         this.suspend = Utils.GetPropertyByName("suspend", tileObj.properties);
+        this.occupied = false
 
-        this.on("overlapend", function() {
-            console.log("OVERLAP END");
-            if(this.suspend == true)
-                this.suspend = false;
-          });
+        //this.Initialize();
+
+
+        //this.scene.portals.add.existing(this);
+        
 
     }
+
+    OnPlayerOccupied = () => {
+        this.occupied = true;
+
+
+    }
+
+    update = () => {
+        //console.log("PORTAL UPDATE");
+        
+        if(this.occupied)
+            console.log("PLAYER OCCUPIED: " + JSON.stringify(this));
+            
+
+    }
+    
 }
